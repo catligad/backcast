@@ -1,14 +1,35 @@
 var VideoListEntryView = Backbone.View.extend({
 
-  initialize: function(video){
-    this.render(video);
+  initialize: function(){
+    this.render();
   },
 
   render: function() {
     this.$el.html(this.template(this.model.attributes));
-    return this;
   },
 
-  template: templateURL('src/templates/videoListEntry.html')
+  events: {
+    click: 'handleClick',
+  }, 
+
+  handleClick: function() {
+    console.log(this)
+    new VideoPlayerView().render(this);
+  },
+
+
+  template: _.template(
+    `
+    <div class="video-list-entry media">
+      <div class="media-left">
+        <img class="media-object" src="
+        <%- snippet.thumbnails.default.url %>" />
+      </div>
+      <div class="media-body">
+        <div class="video-list-entry-title"><%- snippet.title %></b></div>
+        <div class="video-list-entry-detail"><%- snippet.description %></b></div>
+      </div>
+    </div>`)
+  
 
 });
