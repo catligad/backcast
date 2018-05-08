@@ -2,9 +2,9 @@ var AppView = Backbone.View.extend({
 
   el: '#app',
 
-  collection: function() {
+  collection: function(input) {
     let videos = [];
-    window.exampleVideoData.forEach( data => {
+    input.forEach( data => {
       let video = new Video(data);
       videos.push(video);
     });
@@ -12,10 +12,11 @@ var AppView = Backbone.View.extend({
     return this.videos;
   },
 
-  initialize: function() {
+  initialize: function(input) {
     this.render();
-    this.videoList = new VideoListView().render(this.collection());
-    this.videoPlayer = new VideoPlayerView().render();
+    this.videoList = new VideoListView().render(this.collection(input));
+    this.videoPlayer = new VideoPlayerView().render(this.collection(input).models[0]);
+    this.search = new SearchView().render();
   },
 
 
